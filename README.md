@@ -1,10 +1,10 @@
 # MobileNets
 ## Differences
-- Первая версия выделилась тем, что впервые стала использовато depth wise separable conv. С помощью этого введения получилось значительно уменьшить размер и сложность модели, меньшее количество параметров и вычеслений сделали Mobilenet особенно полезной для мобильных и встроенных приложений.
-- MobileNetV2, основываясь на идеях первой версии, кроме этого вводит в архитектуру linear bottlenecks между слоями и short connections, которые позволяют ускорить обучение и повысить точность
-- Последняя, 3 версия, добавила squeeze and excitation слои в изначальные блоки, предсталенные в V2. Согласно авторам статьи,благодаря использованию SE и h-swish в слоях, где тензоры меньше, получается меньшая задержка и прирост качества. 
+- The first version bacome known for first using depth wise separable conv. It helps to significantly reduce the size and complexity of the model, besides fewer parameters and calculations have made Mobilenet especially useful for mobile and embedded applications. 
+- MobileNetV2, based on the ideas of the first version, also introduces linear bottlenecks between layers and short connections into the architecture, which allow to accelerate training and increase accuracy 
+- The latest, version V3, added squeeze and excitation layers to the original blocks presented in V2. According to the authors of the article, by using SE and h-swish in layers where the tensors are smaller, there is less delay and quality gain.
 
-### Ссылки на статьи
+### Links to articles
 - [ MobileNets: Efficient Convolutional Neural Networks for Mobile Vision
 Applications (https://arxiv.org/pdf/1704.04861.pdf)](https://arxiv.org/pdf/1704.04861.pdf)
 - [MobileNetV2: Inverted Residuals and Linear Bottlenecks  (https://arxiv.org/pdf/1801.04381.pdf)](https://arxiv.org/pdf/1801.04381.pdf)
@@ -13,9 +13,9 @@ Applications (https://arxiv.org/pdf/1704.04861.pdf)](https://arxiv.org/pdf/1704.
 -[https://towardsdatascience.com/everything-you-need-to-know-about-mobilenetv3-and-its-comparison-with-previous-versions-a5d5e5a6eeaa](https://towardsdatascience.com/everything-you-need-to-know-about-mobilenetv3-and-its-comparison-with-previous-versions-a5d5e5a6eeaa)
 -[ https://medium.com/@lixinso/mobilenet-c08928f2dba7#:~:text=o%203.2%25%20more%20accurate%20on,MobleNet%20V2%20on%20COCO%20detection.&text=o%206.6%25%20more%20accurate%20compared,MobileNetV2%20model%20with%20comparable%20latency](https://medium.com/@lixinso/mobilenet-c08928f2dba7#:~:text=o%203.2%25%20more%20accurate%20on,MobleNet%20V2%20on%20COCO%20detection.&text=o%206.6%25%20more%20accurate%20compared,MobileNetV2%20model%20with%20comparable%20latency.)
 
- # Запуск
+ # Run
  
--requirements.txt файл содержит перечень библиотек, которые будут необходимы для работы, для установки:
+-requirements.txt - For installation:
 ```
 pip install -r requirements.txt
 ```
@@ -46,11 +46,8 @@ python train_run.py -v v2 --mode test --load True --mobilenet mobilenetv2.pth
 ```
 
 
-## Возможные улучшения 
+## possible improvements
 
-- Поскольку эта реализация была тестовой, в ней я не уделяла необходимого внимания качеству результатов. Хотелось бы попробовать не только упрощенные версии архитектур(какие использовала я в силу отсуствия мощностей и использования колаба), попробовать различные параметры для lr, оптимизатора, посмотреть различия в использовании разных регуляризаций (l1,l2), добавить дропаут в конце модели , добавить больше аугментаций на картинки.
-- Также было бы неплохо почистить код и аккуратнее воспользовать профайлером, дабы он не выдавал бесконечный набор информации, трудный для обаботки 
+- This implementation is a test one, in the future I would like to try not only simplified versions of architectures (used due to lack of capacity), try different parameters for lr, optimizer, regularizations (l1, l2), add a dropout at the end of the model, add more augmentations on the pictures. 
+- It would also be nice to clean up the code and use the profiler more carefully, so that it does not give out an endless set of information that is difficult to process
 
-## Проблемы 
-Сюрпризом оказалось, что докер не ладит с колабом, а поскольку рут права на учебных серверах не выдаются, я зашла в тупик со сбором образа. Конечно, можно было бы вспомнить об виртуальной машине, набраться терпения и реализовать контейнер там, но терпение прогнулось и сжалилось над видавшим виды ноутбуком.
-Несмотря на то, что с первых запусков Mobilenetv1 показал 81 AC, вторая и третья версия не достигла лучшего результата, V2 достигает 78 , но видно , что переобучается, третья качеством не блещет. Я видела, что максимум на цифаре для V3 составляет 64 top1 на 250 эпохах, у меня с 100 эпохе выше 46 не двигается. В целом мне показалась, третья версия более сложная, возможно, я что-то упустила, но ,возможно, нужно просто подольше поиграть с параметрами.
