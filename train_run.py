@@ -41,7 +41,7 @@ parser.add_argument('--load', default=False, help='load model')
 parser.add_argument('--mobilenet', help='pretrained model')
 args = parser.parse_args()
 
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+device = torch.device("cpu")
 print(device)
 sys.stdout.flush()
 test_save_dir = args.save_folder
