@@ -119,7 +119,7 @@ scheduler = StepLR(opt, step_size=10, gamma=0.5)
 
 def train(model, train_loader, val_loader, criterion, opt, n_epochs, scheduler):
     val = []
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    device = torch.device("cpu")
     print("Starting Training Loop...")
     sys.stdout.flush()
     for epoch in range(n_epochs):
