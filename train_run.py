@@ -41,7 +41,7 @@ parser.add_argument('--load', default=False, help='load model')
 parser.add_argument('--mobilenet', help='pretrained model')
 args = parser.parse_args()
 
-device = torch.device("cpu")
+device = torch.device("cuda")
 print(device)
 sys.stdout.flush()
 test_save_dir = args.save_folder
@@ -119,7 +119,7 @@ scheduler = StepLR(opt, step_size=10, gamma=0.5)
 
 def train(model, train_loader, val_loader, criterion, opt, n_epochs, scheduler):
     val = []
-    device = torch.device("cpu")
+    device = torch.device("cuda")
     print("Starting Training Loop...")
     sys.stdout.flush()
     for epoch in range(n_epochs):
