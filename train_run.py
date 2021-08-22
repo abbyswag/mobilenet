@@ -22,7 +22,7 @@ from models.weights_init import weights_init
 from metrics import compute_accuracy
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-v', '--version', choices=['v1', 'v2', 'v3'], default='v3')
+parser.add_argument('-v', '--version', choices=['v1', 'v2', 'v3'], default='v2')
 parser.add_argument('-b', '--batch_size', default=64,
                     type=int, help='Batch size for training')
 parser.add_argument('--num_workers', default=8,
