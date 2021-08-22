@@ -122,6 +122,8 @@ def train(model, train_loader, val_loader, criterion, opt, n_epochs, scheduler):
     device = torch.device("cuda")
     print("Starting Training Loop...")
     sys.stdout.flush()
+    x = range(n_epochs)
+    training_loss, testing_loss, training_acc, testing_acc = [], [], [], []
     for epoch in range(n_epochs):
         model.train()
         n_iters = 0
@@ -166,7 +168,24 @@ def train(model, train_loader, val_loader, criterion, opt, n_epochs, scheduler):
             if val_acc > val[epoch-1]:
                 torch.save(model.state_dict(), 'mobilenet' + args.version + '.pth')
         val.append(val_acc)
+        training_loss.append(loss_train)
+        testing_loss.append(loss_val)
+        training_acc.append(train_acc)
+        testing_acc.append(val_acc)
         print("Epoch {} | Training loss {}  | Testing loss  {} | Training Accuracy {}  | Testing Accuracy  {}".format(epoch, loss_train, val_loss,train_acc, val_acc))
+    plot_graph(x, training_loss, 'Epochs', 'Loss', 'Training Loss')
+    plot_graph(x, testing_loss, 'Epochs', 'Loss', 'Testing Loss')
+    plot_graph(x, training_acc, 'Epochs', 'Accuracy', 'Training Accuracy')
+    plot_graph(x, testing_acc, 'Epochs', 'Accuracy', 'Testing Accuracy')
+
+import matplotlib.pyplot as plt
+
+def plot_graph(x, y, xl, yl, title):
+    plt.xlabel(xl)
+    plt.ylabel(yl)
+    plt.title(title)
+    plt.plot(x, y)
+    plt.show()
 
 
 def eval(model, val_loader, save_img, folder):
